@@ -1,90 +1,81 @@
-﻿namespace BoardLogic
+﻿using BoardLogic;
+
+Board game = new Board();
+
+int userTurn = -1;
+int computerTurn = -1;
+Random random = new Random();
+
+
+while (game.whoIsWinner() == 0)
 {
-    public class Board
+    //Don't allow humans to choose occupied square
+    while (userTurn == -1 || game.Grid[userTurn] != 0)
     {
-        public int[] Grid { get; set; }
-
-        public Board()  //constructor: object of class is created to initialize all class data members
-        {
-            //define how big the array is
-            Grid = new int[9];
-
-            //initialize the board by setting all squares to empty
-            for (int i = 0; i < 9; i++)
-            {
-                Grid[i] = 0;
-            }
-
-        }
-
-        public bool isBoardFull()
-        {
-            bool isFull = true;   //assume board is full. if exception is found, change the value
-            for (int i = 0; i < Grid.Length; i++)
-            {
-                if (Grid[i] == 0)
-                {
-                    isFull = false;
-                }
-            }
-            return isFull;
-        }
-
-
-        public int whoIsWinner()
-        {
-            //return 0 if nobody won. return the player number if they won.
-
-            //First Row:
-            if (Grid[0] == Grid[1] && Grid[1] == Grid[2])
-            {
-                return Grid[0];
-            }
-
-            //Second Row:
-            if (Grid[3] == Grid[4] && Grid[4] == Grid[5])
-            {
-                return Grid[3];
-            }
-
-            //Third Row:
-            if (Grid[6] == Grid[7] && Grid[7] == Grid[8])
-            {
-                return Grid[6];
-            }
-
-            //First Column:
-            if (Grid[0] == Grid[3] && Grid[3] == Grid[6])
-            {
-                return Grid[0];
-            }
-
-            //Second Column:
-            if (Grid[1] == Grid[4] && Grid[4] == Grid[7])
-            {
-                return Grid[1];
-            }
-
-            //Third Column:
-            if (Grid[2] == Grid[5] && Grid[5] == Grid[8])
-            {
-                return Grid[2];
-            }
-
-            //Diagonal L to R:
-            if (Grid[0] == Grid[4] && Grid[4] == Grid[8])
-            {
-                return Grid[0];
-            }
-
-            //Diagonal R to L:
-            if (Grid[2] == Grid[4] && Grid[4] == Grid[6])
-            {
-                return Grid[2];
-            }
-            return 0;
-        }
-
-
+        Console.WriteLine("Enter a number from 0-8: ");
+        userTurn = int.Parse(Console.ReadLine());
+        Console.WriteLine($"You chose {userTurn}");
     }
+    game.Grid[userTurn] = 1;
+
+    if (game.isBoardFull())
+
+        break;
+
+    //Dont allow computers to choose invalid square
+    while (computerTurn == -1 || game.Grid[computerTurn] != 0)
+    {
+        computerTurn = random.Next(8);
+        Console.WriteLine($"Computer chose {computerTurn}");
+    }
+    game.Grid[computerTurn] = 2;
+
+    if (game.isBoardFull())
+
+        break;
+
+    printBoard();
+    Console.WriteLine("-------------------------");
+
+    //while is done
+    Console.WriteLine($"The game is over. {game.whoIsWinner()} is the winner! :)");
 }
+Console.WriteLine($"Player {game.whoIsWinner()} won the game! :P");
+
+
+printBoard();
+
+
+void printBoard()
+{
+    for (int i = 0; i < 9; i++)
+    {
+        //Print X or O for each square
+        //.: unoccupied
+        //X: Player 1
+        //O: Player 2
+
+        if (game.Grid[i] == 0)
+        {
+            Console.Write(".");
+        }
+        if (game.Grid[i] == 1)
+        {
+            Console.Write("X");
+        }
+        if (game.Grid[i] == 2)
+        {
+            Console.Write("O");
+        }
+
+        //Print a new line every 3rd character
+        if (i == 2 || i == 5 || i == 8)
+        {
+            Console.WriteLine();
+        }
+    }
+
+}
+
+
+
