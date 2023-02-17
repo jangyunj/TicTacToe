@@ -14,7 +14,7 @@ while (game.whoIsWinner() == 0)
     {
         Console.WriteLine("Enter a number from 0-8: ");
         userTurn = int.Parse(Console.ReadLine());
-        Console.WriteLine($"You chose {userTurn}");
+        Console.WriteLine($"You have chosen {userTurn}");
     }
     game.Grid[userTurn] = 1;
 
@@ -22,7 +22,7 @@ while (game.whoIsWinner() == 0)
 
         break;
 
-    //Dont allow computers to choose invalid square
+    //Don't allow computers to choose invalid square
     while (computerTurn == -1 || game.Grid[computerTurn] != 0)
     {
         computerTurn = random.Next(8);
@@ -37,7 +37,7 @@ while (game.whoIsWinner() == 0)
     printBoard();
     Console.WriteLine("-------------------------");
 
-    //while is done
+    //While is done
     Console.WriteLine($"The game is over. {game.whoIsWinner()} is the winner! :)");
 }
 Console.WriteLine($"Player {game.whoIsWinner()} won the game! :P");
@@ -51,7 +51,7 @@ void printBoard()
     for (int i = 0; i < 9; i++)
     {
         //Print X or O for each square
-        //.: unoccupied
+        //.: Unoccupied
         //X: Player 1
         //O: Player 2
 
